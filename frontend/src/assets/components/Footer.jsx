@@ -11,10 +11,10 @@ const exploreLinks = [
 function Logo() {
   return (
     <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-      <circle cx="14" cy="6" r="2.4" fill="#D6A94D" />
+      <circle cx="14" cy="6" r="2.4" fill="#D6242A" />
       <path
         d="M14 10c-4.5 0-8 3.8-8 8.2 0 3 2.2 5.3 5 5.3 4.2 0 5.5-4 5.5-8.6 0-1.7-.3-3.2-2.5-4.9z"
-        fill="#D6A94D"
+        fill="#D6242A"
       />
     </svg>
   );
@@ -64,32 +64,32 @@ function LinkedinIcon() {
 
 export default function Footer() {
   return (
-    <footer className="bg-black pt-16">
+    <footer className="bg-white border-t border-neutral-200 pt-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
         {/* Brand */}
         <div>
           <div className="flex items-center gap-2.5 mb-4">
             <Logo />
             <div className="leading-tight">
-              <p className="text-white font-bold text-base tracking-wide">
+              <p className="text-neutral-900 font-bold text-base tracking-wide">
                 EDUCARE
               </p>
-              <p className="text-gold text-[10px] font-medium tracking-[0.15em]">
+              <p className="text-[#D6242A] text-[10px] font-semibold tracking-[0.15em]">
                 SINCE 2003 · MUMBAI
               </p>
             </div>
           </div>
-          <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+          <p className="text-neutral-600 text-sm leading-relaxed max-w-xs">
             A quiet, disciplined place to become the student you want to be.
           </p>
-          <div className="flex items-center gap-4 mt-5 text-gray-400">
-            <a href="#" aria-label="Instagram" className="hover:text-gold">
+          <div className="flex items-center gap-4 mt-5 text-neutral-500">
+            <a href="#" aria-label="Instagram" className="hover:text-[#D6242A]">
               <InstagramIcon />
             </a>
-            <a href="#" aria-label="Facebook" className="hover:text-gold">
+            <a href="#" aria-label="Facebook" className="hover:text-[#D6242A]">
               <FacebookIcon />
             </a>
-            <a href="#" aria-label="LinkedIn" className="hover:text-gold">
+            <a href="#" aria-label="LinkedIn" className="hover:text-[#D6242A]">
               <LinkedinIcon />
             </a>
           </div>
@@ -97,13 +97,13 @@ export default function Footer() {
 
         {/* Explore */}
         <div>
-          <p className="text-gold text-xs font-semibold tracking-[0.15em] mb-5">
+          <p className="text-[#D6242A] text-xs font-bold tracking-[0.15em] mb-5">
             EXPLORE
           </p>
-          <ul className="space-y-3 text-gray-300 text-sm">
+          <ul className="space-y-3 text-neutral-700 text-sm">
             {exploreLinks.map((link) => (
               <li key={link.label}>
-                <Link to={link.to} className="hover:text-white">
+                <Link to={link.to} className="hover:text-[#D6242A]">
                   {link.label}
                 </Link>
               </li>
@@ -113,27 +113,27 @@ export default function Footer() {
 
         {/* Reach us */}
         <div>
-          <p className="text-gold text-xs font-semibold tracking-[0.15em] mb-5">
+          <p className="text-[#D6242A] text-xs font-bold tracking-[0.15em] mb-5">
             REACH US
           </p>
-          <ul className="space-y-4 text-gray-300 text-sm">
+          <ul className="space-y-4 text-neutral-700 text-sm">
             <li className="flex items-start gap-3">
-              <Phone size={16} className="text-gold mt-0.5 shrink-0" />
+              <Phone size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
               <span>+91 98198 28574 / 91526 12535</span>
             </li>
             <li className="flex items-start gap-3">
-              <Mail size={16} className="text-gold mt-0.5 shrink-0" />
+              <Mail size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
               <span>ieducare888@gmail.com</span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin size={16} className="text-gold mt-0.5 shrink-0" />
+              <MapPin size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
               <span>
                 101 Jolitha Complex, Near Ratna store, opposite Shiv Mandir,
                 Ghatla village marg, Chembur, Mumbai- 400071
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <MapPin size={16} className="text-gold mt-0.5 shrink-0" />
+              <MapPin size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
               <span>
                 2nd floor 36, Vorabhavan Plot No. 467-A, Dr. Ambedkar road,
                 above Bank Of Baroda, Mumbai- 400019
@@ -143,7 +143,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-14 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 pb-8 text-xs text-gray-500">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-14 pt-6 border-t border-neutral-200 flex flex-col sm:flex-row justify-between items-center gap-3 pb-8 text-xs text-neutral-500">
         <p>© {new Date().getFullYear()} Educare. All rights reserved.</p>
       </div>
     </footer>

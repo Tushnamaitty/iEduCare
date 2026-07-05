@@ -1,13 +1,7 @@
 @import "tailwindcss";
-@import "tailwindcss";
-
-@theme {
-  --color-gold: #D6A94D;
-  --color-gold-dark: #C69A3D;
-}
 
 body {
   margin: 0;
   font-family: "Inter", system-ui, -apple-system, sans-serif;
-  background-color: #000;
+  background-color: #fbf4e9;
 }

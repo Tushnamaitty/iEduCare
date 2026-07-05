@@ -23,33 +23,31 @@ export default function About() {
   return (
     <>
       {/* Page header */}
-      <section className="bg-black">
+      <section className="bg-[#FBF4E9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-8 pb-20 sm:pb-24">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm text-gray-400 mb-10">
-            <Link to="/" className="hover:text-white">
+          <div className="flex items-center gap-2 text-sm text-neutral-500 mb-10">
+            <Link to="/" className="hover:text-[#D6242A]">
               Home
             </Link>
             <ChevronRight size={14} />
-            <span className="text-white">About</span>
+            <span className="text-neutral-900">About</span>
           </div>
 
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-8 h-px bg-gold" />
-            <p className="text-gold text-xs font-semibold tracking-[0.2em]">
+            <span className="w-8 h-px bg-[#D6242A]" />
+            <p className="text-[#D6242A] text-xs font-bold tracking-[0.2em]">
               ABOUT THE INSTITUTE
             </p>
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] max-w-3xl">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-900 leading-[1.1] max-w-3xl">
             A coaching institute
             <br />
-            <span className="italic font-serif text-gold font-medium">
-              that prefers depth to noise.
-            </span>
+            <span className="text-[#D6242A]">that prefers depth to noise.</span>
           </h1>
 
-          <p className="mt-6 text-gray-400 text-base leading-relaxed max-w-xl">
+          <p className="mt-6 text-neutral-600 text-base leading-relaxed max-w-xl">
             iEduCare was started by Nilesh Rai Sir in 2003. All these 23 years
             nothing has changed.
           </p>
@@ -57,14 +55,14 @@ export default function About() {
       </section>
 
       {/* Our story */}
-      <section className="bg-[#F6F4EF]">
+      <section className="bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 sm:py-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Left: heading */}
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <span className="w-8 h-px bg-gold" />
-                <p className="text-gold text-xs font-semibold tracking-[0.2em]">
+                <span className="w-8 h-px bg-[#D6242A]" />
+                <p className="text-[#D6242A] text-xs font-bold tracking-[0.2em]">
                   OUR STORY
                 </p>
               </div>
@@ -105,15 +103,15 @@ export default function About() {
             {cards.map((card) => (
               <div
                 key={card.label}
-                className="bg-neutral-950 rounded-xl p-6 sm:p-8"
+                className="bg-white border border-neutral-200 rounded-xl p-6 sm:p-8 shadow-sm"
               >
-                <p className="text-gold text-xs font-semibold tracking-[0.15em] mb-4">
+                <p className="text-[#D6242A] text-xs font-bold tracking-[0.15em] mb-4">
                   {card.label}
                 </p>
-                <h3 className="text-white text-xl font-bold mb-3">
+                <h3 className="text-neutral-900 text-xl font-bold mb-3">
                   {card.title}
                 </h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-neutral-600 text-sm leading-relaxed">
                   {card.text}
                 </p>
               </div>
