@@ -1,6 +1,12 @@
-import { Send, Phone, Mail, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Phone, Mail, MapPin } from "lucide-react";
 
-const exploreLinks = ["About", "Courses", "Toppers", "Gallery"];
+const exploreLinks = [
+  { label: "About", to: "/about" },
+  { label: "Courses", to: "/courses" },
+  { label: "Toppers", to: "/toppers" },
+  { label: "Gallery", to: "/gallery" },
+];
 
 function Logo() {
   return (
@@ -46,15 +52,6 @@ function FacebookIcon() {
   );
 }
 
-function YoutubeIcon() {
-  return (
-    <svg {...iconProps}>
-      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-      <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
-    </svg>
-  );
-}
-
 function LinkedinIcon() {
   return (
     <svg {...iconProps}>
@@ -92,14 +89,8 @@ export default function Footer() {
             <a href="#" aria-label="Facebook" className="hover:text-gold">
               <FacebookIcon />
             </a>
-            <a href="#" aria-label="YouTube" className="hover:text-gold">
-              <YoutubeIcon />
-            </a>
             <a href="#" aria-label="LinkedIn" className="hover:text-gold">
               <LinkedinIcon />
-            </a>
-            <a href="#" aria-label="Telegram" className="hover:text-gold">
-              <Send size={18} />
             </a>
           </div>
         </div>
@@ -110,11 +101,11 @@ export default function Footer() {
             EXPLORE
           </p>
           <ul className="space-y-3 text-gray-300 text-sm">
-            {exploreLinks.map((l) => (
-              <li key={l}>
-                <a href={`#${l.toLowerCase()}`} className="hover:text-white">
-                  {l}
-                </a>
+            {exploreLinks.map((link) => (
+              <li key={link.label}>
+                <Link to={link.to} className="hover:text-white">
+                  {link.label}
+                </Link>
               </li>
             ))}
           </ul>

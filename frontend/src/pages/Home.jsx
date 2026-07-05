@@ -1,11 +1,11 @@
-import Navbar from "../assets/components/Navbar";
+import Hero from "../assets/components/Hero";
+import StatsBar from "../assets/components/StatsBar";
 
-function Home() {
+export default function Home() {
   return (
-    <div className="min-h-screen bg-black">
-      <Navbar />
-    </div>
+    <>
+      <Hero />
+      <StatsBar />
+    </>
   );
 }
-
-export default Home;
