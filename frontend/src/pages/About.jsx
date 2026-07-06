@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
+import classroomImg from "../assets/classroom-teaching.jpg";
 
 const cards = [
   {
@@ -24,7 +25,7 @@ export default function About() {
     <>
       {/* Page header */}
       <section className="bg-[#FBF4E9]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-8 pb-20 sm:pb-24">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-8 pb-16 sm:pb-24">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm text-neutral-500 mb-10">
             <Link to="/" className="hover:text-[#D6242A]">
@@ -34,29 +35,50 @@ export default function About() {
             <span className="text-neutral-900">About</span>
           </div>
 
-          <div className="flex items-center gap-3 mb-6">
-            <span className="w-8 h-px bg-[#D6242A]" />
-            <p className="text-[#D6242A] text-xs font-bold tracking-[0.2em]">
-              ABOUT THE INSTITUTE
-            </p>
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            {/* Left: text */}
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="w-8 h-px bg-[#D6242A]" />
+                <p className="text-[#D6242A] text-xs font-bold tracking-[0.2em]">
+                  ABOUT THE INSTITUTE
+                </p>
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-900 leading-[1.1]">
+                A coaching institute
+                <br />
+                <span className="text-[#D6242A]">
+                  that prefers depth to noise.
+                </span>
+              </h1>
+
+              <p className="mt-6 text-neutral-600 text-base leading-relaxed max-w-xl">
+                iEduCare was started by Nilesh Rai Sir in 2003. All these 23
+                years nothing has changed.
+              </p>
+            </div>
+
+            {/* Right: image */}
+            <div className="relative">
+              <div className="aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-lg">
+                <img
+                  src={classroomImg}
+                  alt="Nilesh Rai Sir teaching ICSE Hindi exam strategy to a classroom of students at iEduCare"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                />
+              </div>
+              {/* Accent corner detail */}
+              <div className="hidden sm:block absolute -bottom-4 -left-4 w-24 h-24 border-b-4 border-l-4 border-[#D6242A] rounded-bl-2xl -z-10" />
+            </div>
           </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-900 leading-[1.1] max-w-3xl">
-            A coaching institute
-            <br />
-            <span className="text-[#D6242A]">that prefers depth to noise.</span>
-          </h1>
-
-          <p className="mt-6 text-neutral-600 text-base leading-relaxed max-w-xl">
-            iEduCare was started by Nilesh Rai Sir in 2003. All these 23 years
-            nothing has changed.
-          </p>
         </div>
       </section>
 
       {/* Our story */}
-      <section className="bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 sm:py-24">
+      <section className="bg-[#FBF4E9]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 sm:py-24">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Left: heading */}
             <div>
@@ -99,7 +121,7 @@ export default function About() {
           </div>
 
           {/* Mission / Vision / Philosophy cards */}
-          <div className="grid md:grid-cols-3 gap-5 sm:gap-6 mt-16">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 mt-16">
             {cards.map((card) => (
               <div
                 key={card.label}

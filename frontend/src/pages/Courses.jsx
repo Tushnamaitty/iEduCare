@@ -48,7 +48,7 @@ const subjects = [
 
 export default function Courses() {
   return (
-    <section className="bg-white">
+    <section className="bg-[#FBF4E9]">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-14 sm:pt-16 pb-16">
         {/* Heading */}
         <div className="flex items-center gap-3 mb-6">
@@ -94,7 +94,7 @@ export default function Courses() {
 
         {/* Timing & batch info */}
         <div className="grid sm:grid-cols-2 gap-6 mt-10">
-          <div className="flex items-start gap-4 border border-neutral-200 rounded-xl p-6">
+          <div className="flex items-start gap-4 border border-neutral-200 rounded-xl p-6 bg-white">
             <div className="w-11 h-11 flex items-center justify-center bg-[#D6242A] rounded-full text-white shrink-0">
               <Clock size={20} />
             </div>
@@ -109,7 +109,7 @@ export default function Courses() {
             </div>
           </div>
 
-          <div className="flex items-start gap-4 border border-neutral-200 rounded-xl p-6">
+          <div className="flex items-start gap-4 border border-neutral-200 rounded-xl p-6 bg-white">
             <div className="w-11 h-11 flex items-center justify-center bg-[#F3B70E] rounded-full text-white shrink-0">
               <Users size={20} />
             </div>
