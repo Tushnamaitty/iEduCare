@@ -76,6 +76,10 @@ export default function About() {
         </div>
       </section>
 
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="border-t border-neutral-200" />
+      </div>
+
       {/* Our story */}
       <section className="bg-[#FBF4E9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 sm:py-24">

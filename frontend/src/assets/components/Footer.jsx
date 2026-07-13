@@ -1,22 +1,22 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../../config";
 import { Phone, Mail, MapPin } from "lucide-react";
+import logoImg from "../logo.png";
 
 const exploreLinks = [
   { label: "About", to: "/about" },
   { label: "Courses", to: "/courses" },
   { label: "Toppers", to: "/toppers" },
-  { label: "Gallery", to: "/gallery" },
 ];
 
 function Logo() {
   return (
-    <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
-      <circle cx="14" cy="6" r="2.4" fill="#D6242A" />
-      <path
-        d="M14 10c-4.5 0-8 3.8-8 8.2 0 3 2.2 5.3 5 5.3 4.2 0 5.5-4 5.5-8.6 0-1.7-.3-3.2-2.5-4.9z"
-        fill="#D6242A"
-      />
-    </svg>
+    <img
+      src={logoImg}
+      alt="iEduCare Logo"
+      className="w-[26px] h-[26px] object-contain"
+    />
   );
 }
 
@@ -52,19 +52,38 @@ function FacebookIcon() {
   );
 }
 
-function LinkedinIcon() {
+function YoutubeIcon() {
   return (
     <svg {...iconProps}>
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect x="2" y="9" width="4" height="12" />
-      <circle cx="4" cy="4" r="2" />
+      <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
+      <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
     </svg>
   );
 }
 
 export default function Footer() {
+  const [settings, setSettings] = useState(null);
+  const [branches, setBranches] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/settings/1/`)
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error("Settings not found");
+      })
+      .then((data) => setSettings(data))
+      .catch((err) => console.error("Failed to fetch settings:", err));
+
+    fetch(`${API_BASE_URL}/api/branches/`)
+      .then((res) => res.json())
+      .then((data) => setBranches(data))
+      .catch((err) => console.error("Failed to fetch branches:", err));
+  }, []);
+
+  const uniquePhones = Array.from(new Set(branches.map(b => b.phone).filter(Boolean)));
+
   return (
-    <footer className="bg-white border-t border-neutral-200 pt-16">
+    <footer className="bg-[#FAF9F6] border-t border-neutral-200 pt-16">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
         {/* Brand */}
         <div>
@@ -83,15 +102,21 @@ export default function Footer() {
             A quiet, disciplined place to become the student you want to be.
           </p>
           <div className="flex items-center gap-4 mt-5 text-neutral-500">
-            <a href="#" aria-label="Instagram" className="hover:text-[#D6242A]">
-              <InstagramIcon />
-            </a>
-            <a href="#" aria-label="Facebook" className="hover:text-[#D6242A]">
-              <FacebookIcon />
-            </a>
-            <a href="#" aria-label="LinkedIn" className="hover:text-[#D6242A]">
-              <LinkedinIcon />
-            </a>
+            {settings?.instagram_url && (
+              <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-[#D6242A]">
+                <InstagramIcon />
+              </a>
+            )}
+            {settings?.facebook_url && (
+              <a href={settings.facebook_url} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-[#D6242A]">
+                <FacebookIcon />
+              </a>
+            )}
+            {settings?.youtube_url && (
+              <a href={settings.youtube_url} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="hover:text-[#D6242A]">
+                <YoutubeIcon />
+              </a>
+            )}
           </div>
         </div>
 
@@ -117,34 +142,45 @@ export default function Footer() {
             REACH US
           </p>
           <ul className="space-y-4 text-neutral-700 text-sm">
-            <li className="flex items-start gap-3">
-              <Phone size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
-              <span>+91 98198 28574 / 91526 12535</span>
-            </li>
+            {uniquePhones.length > 0 && (
+              <li className="flex items-start gap-3">
+                <Phone size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
+                <span>
+                  {uniquePhones.map((phone, idx) => (
+                    <span key={phone}>
+                      <a href={`tel:${phone.replace(/\s+/g, '')}`} className="hover:text-[#D6242A] transition-colors">
+                        {phone}
+                      </a>
+                      {idx < uniquePhones.length - 1 && " / "}
+                    </span>
+                  ))}
+                </span>
+              </li>
+            )}
             <li className="flex items-start gap-3">
               <Mail size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
-              <span>ieducare888@gmail.com</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <MapPin size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
               <span>
-                101 Jolitha Complex, Near Ratna store, opposite Shiv Mandir,
-                Ghatla village marg, Chembur, Mumbai- 400071
+                <a href="mailto:ieducare888@gmail.com" className="hover:text-[#D6242A] transition-colors">
+                  ieducare888@gmail.com
+                </a>
               </span>
             </li>
-            <li className="flex items-start gap-3">
-              <MapPin size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
-              <span>
-                2nd floor 36, Vorabhavan Plot No. 467-A, Dr. Ambedkar road,
-                above Bank Of Baroda, Mumbai- 400019
-              </span>
-            </li>
+            
+            {branches.map(branch => (
+              <li key={branch.id} className="flex items-start gap-3">
+                <MapPin size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
+                <span>{branch.address}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 mt-14 pt-6 border-t border-neutral-200 flex flex-col sm:flex-row justify-between items-center gap-3 pb-8 text-xs text-neutral-500">
         <p>© {new Date().getFullYear()} Educare. All rights reserved.</p>
+        <Link to="/admin/login" className="hover:text-[#D6242A] transition-colors font-medium">
+          Admin Portal
+        </Link>
       </div>
     </footer>
   );

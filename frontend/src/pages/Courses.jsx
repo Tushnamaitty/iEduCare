@@ -1,52 +1,84 @@
+import { useState, useEffect } from "react";
 import { Clock, Users } from "lucide-react";
+import { API_BASE_URL } from "../config";
 
-const courses = [
+const defaultCourses = [
   {
     badge: "FULL YEAR",
     grade: "7 – 10",
     title: "ICSE Foundation",
-    desc: "Complete year long ICSE preparation across all core subjects, mapped to the CISCE syllabus.",
+    description: "Complete year long ICSE preparation across all core subjects, mapped to the CISCE syllabus.",
   },
   {
     badge: "FULL YEAR",
     grade: "7 – 10",
     title: "IGCSE Foundation",
-    desc: "Complete year long IGCSE preparation across all core subjects, mapped to the CAIE international syllabus.",
+    description: "Complete year long IGCSE preparation across all core subjects, mapped to the CAIE international syllabus.",
   },
 ];
 
-const subjects = [
+const defaultSubjects = [
   {
     name: "Mathematics",
-    desc: "From arithmetic fluency to board-level geometry and algebra  precision, always.",
+    description: "From arithmetic fluency to board-level geometry and algebra  precision, always.",
   },
   {
     name: "Science",
-    desc: "Physics, Chemistry and Biology taught by subject specialists.",
+    description: "Physics, Chemistry and Biology taught by subject specialists.",
   },
   {
     name: "English",
-    desc: "Comprehension, composition, literature and grammar taught the right way.",
+    description: "Comprehension, composition, literature and grammar taught the right way.",
   },
   {
     name: "Hindi",
-    desc: "Building confidence in reading, writing, and meaningful communication.",
+    description: "Building confidence in reading, writing, and meaningful communication.",
   },
   {
     name: "History",
-    desc: "A narrative approach to history  dates become stories, movements become meaning.",
+    description: "A narrative approach to history  dates become stories, movements become meaning.",
   },
   {
     name: "Geography",
-    desc: "Map skills, physical geography and human geography visualised, not memorised.",
+    description: "Map skills, physical geography and human geography visualised, not memorised.",
   },
   {
     name: "Economics",
-    desc: "Core concepts of markets, money and decision-making explained through real-world thinking.",
+    description: "Core concepts of markets, money and decision-making explained through real-world thinking.",
   },
 ];
 
 export default function Courses() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/courses/`)
+      .then((res) => res.json())
+      .then((json) => setData(json))
+      .catch((err) => {
+        console.error("Failed to load courses from API:", err);
+      });
+  }, []);
+
+  const displayCourses = data.length > 0 ? data : defaultCourses;
+
+  // Extract a unique list of subjects from the dynamic courses, or fall back to default
+  const subjectList = [];
+  const subjectNames = new Set();
+
+  displayCourses.forEach((course) => {
+    if (course.subjects && course.subjects.length > 0) {
+      course.subjects.forEach((sub) => {
+        if (!subjectNames.has(sub.name)) {
+          subjectNames.add(sub.name);
+          subjectList.push({ name: sub.name, description: sub.description });
+        }
+      });
+    }
+  });
+
+  const displaySubjects = subjectList.length > 0 ? subjectList : defaultSubjects;
+
   return (
     <section className="bg-[#FBF4E9]">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-14 sm:pt-16 pb-16">
@@ -71,7 +103,7 @@ export default function Courses() {
 
         {/* Course cards */}
         <div className="grid sm:grid-cols-2 gap-6 mt-10">
-          {courses.map((course) => (
+          {displayCourses.map((course) => (
             <div
               key={course.title}
               className="bg-white border border-neutral-200 rounded-xl p-6 sm:p-8 shadow-sm"
@@ -86,7 +118,7 @@ export default function Courses() {
                 {course.title}
               </h3>
               <p className="text-neutral-600 text-sm leading-relaxed max-w-md">
-                {course.desc}
+                {course.description || course.desc}
               </p>
             </div>
           ))}
@@ -126,9 +158,12 @@ export default function Courses() {
         </div>
 
         {/* Subjects */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 mt-16 pt-12 border-t border-neutral-200">
-          {subjects.map((subject) => (
-            <div key={subject.name}>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16 pt-12 border-t border-neutral-200">
+          {displaySubjects.map((subject) => (
+            <div
+              key={subject.name}
+              className="bg-white border border-neutral-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+            >
               <p className="text-neutral-400 text-xs font-semibold tracking-[0.15em] mb-3">
                 SUBJECT
               </p>
@@ -136,7 +171,7 @@ export default function Courses() {
                 {subject.name}
               </h4>
               <p className="text-neutral-500 text-sm leading-relaxed">
-                {subject.desc}
+                {subject.description || subject.desc}
               </p>
             </div>
           ))}

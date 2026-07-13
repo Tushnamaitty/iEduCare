@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { API_BASE_URL } from "../../config";
 import { Menu, X, ArrowRight } from "lucide-react";
+import logoImg from "../logo.png";
 
 const navLinks = [
   { label: "Home", to: "/" },
@@ -13,21 +15,31 @@ const navLinks = [
 
 function Logo() {
   return (
-    <svg width="30" height="30" viewBox="0 0 28 28" fill="none">
-      <circle cx="14" cy="6" r="2.6" fill="#D6242A" />
-      <path
-        d="M14 10c-4.5 0-8 3.8-8 8.2 0 3 2.2 5.3 5 5.3 4.2 0 5.5-4 5.5-8.6 0-1.7-.3-3.2-2.5-4.9z"
-        fill="#D6242A"
-      />
-    </svg>
+    <img
+      src={logoImg}
+      alt="iEduCare Logo"
+      className="w-[30px] h-[30px] object-contain"
+    />
   );
 }
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [branches, setBranches] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/branches/`)
+      .then(res => res.json())
+      .then(data => setBranches(data))
+      .catch(err => console.error("Failed to load branches:", err));
+  }, []);
+
+  const branchText = branches.length > 0 
+    ? branches.map(b => b.name.toUpperCase()).join(" • ")
+    : "CHEMBUR • MATUNGA";
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FBF4E9]/95 backdrop-blur border-b border-black/5">
+    <header className="sticky top-0 z-50 bg-[#FBF4E9]/95 backdrop-blur border-b border-black/15">
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 lg:px-10 py-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5">
@@ -37,7 +49,7 @@ export default function Navbar() {
               EDUCARE
             </p>
             <p className="text-[#D6242A] text-[10px] font-bold tracking-[0.15em]">
-              CHEMBUR • MATUNGA
+              {branchText}
             </p>
           </div>
         </Link>

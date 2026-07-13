@@ -1,12 +1,18 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 import { ChevronRight, MapPin, Phone, Clock } from "lucide-react";
 import chemburImg from "../assets/chembur-campus.jpg";
 import matungaImg from "../assets/matunga-campus.jpg";
 
-const campuses = [
+const imageMap = {
+  "Chembur": chemburImg,
+  "Matunga": matungaImg,
+};
+
+const defaultCampuses = [
   {
     name: "Chembur",
-    image: chemburImg,
     address:
       "101 Jolitha Complex, Near Ratna store, opposite Shiv Mandir, Ghatla village marg, Chembur, Mumbai- 400071",
     phone: "+91 98198 28574",
@@ -14,7 +20,6 @@ const campuses = [
   },
   {
     name: "Matunga",
-    image: matungaImg,
     address:
       "2nd floor 36, Vorabhavan Plot No. 467-A, Dr. Ambedkar road, above Bank Of Baroda, Mumbai- 400019",
     phone: "+91 91526 12535",
@@ -23,11 +28,14 @@ const campuses = [
 ];
 
 function CampusCard({ campus }) {
+  const imageSrc = campus.image 
+    ? (campus.image.startsWith('http') ? campus.image : API_BASE_URL + campus.image) 
+    : (imageMap[campus.name] || chemburImg);
   return (
     <div className="bg-white border border-neutral-200 rounded-2xl overflow-hidden shadow-sm">
       <div className="aspect-[16/10] w-full overflow-hidden bg-neutral-100">
         <img
-          src={campus.image}
+          src={imageSrc}
           alt={`${campus.name} campus`}
           className="w-full h-full object-cover"
         />
@@ -59,9 +67,12 @@ function CampusCard({ campus }) {
               className="text-[#F3B70E] shrink-0"
               strokeWidth={2.25}
             />
-            <p className="text-neutral-600 text-sm sm:text-base">
+            <a
+              href={`tel:${campus.phone.replace(/\s+/g, "")}`}
+              className="text-neutral-600 text-sm sm:text-base hover:text-[#D6242A] transition-colors"
+            >
               {campus.phone}
-            </p>
+            </a>
           </div>
 
           <div className="flex items-center gap-3">
@@ -81,6 +92,19 @@ function CampusCard({ campus }) {
 }
 
 export default function Branches() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/branches/`)
+      .then((res) => res.json())
+      .then((json) => setData(json))
+      .catch((err) => {
+        console.error("Failed to load branches from API:", err);
+      });
+  }, []);
+
+  const displayCampuses = data.length > 0 ? data : defaultCampuses;
+
   return (
     <>
       {/* Hero section */}
@@ -119,7 +143,7 @@ export default function Branches() {
       <section className="bg-[#FBF4E9]">
         <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-16 sm:pb-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
-            {campuses.map((campus) => (
+            {displayCampuses.map((campus) => (
               <CampusCard key={campus.name} campus={campus} />
             ))}
           </div>

@@ -1,7 +1,31 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../../config";
 import { ArrowRight } from "lucide-react";
 import heroImg from "../hero.png";
 
 export default function Hero() {
+  const [branches, setBranches] = useState([]);
+  const [batchSize, setBatchSize] = useState("20");
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/branches/`)
+      .then(res => res.json())
+      .then(data => setBranches(data))
+      .catch(err => console.error("Failed to load branches:", err));
+
+    fetch(`${API_BASE_URL}/api/settings/1/`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.batch_size) setBatchSize(data.batch_size);
+      })
+      .catch(err => console.error("Failed to load settings:", err));
+  }, []);
+
+  const branchText = branches.length > 0 
+    ? branches.map(b => b.name.toUpperCase()).join(" • ")
+    : "CHEMBUR • MATUNGA";
+
   return (
     <section id="home" className="relative bg-[#FBF4E9] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
@@ -10,7 +34,7 @@ export default function Hero() {
           <div className="flex items-center gap-3 mb-6">
             <span className="w-8 h-px bg-[#D6242A]" />
             <p className="text-[#D6242A] text-xs font-bold tracking-[0.2em]">
-              SINCE 2003 • CHEMBUR • MATUNGA
+              SINCE 2003 • {branchText}
             </p>
           </div>
 
@@ -26,18 +50,18 @@ export default function Hero() {
 
           <p className="mt-6 text-neutral-700 text-base leading-relaxed max-w-md">
             Expert coaching for Classes 7 to 10 — experienced mentors,
-            batches capped at 20, weekly diagnostics and an outstanding
+            batches capped at {batchSize}, weekly diagnostics and an outstanding
             record of ICSE &amp; IGCSE board results.
           </p>
 
           <div className="flex flex-wrap items-center gap-8 mt-10">
-            <a
-              href="#courses"
+            <Link
+              to="/courses"
               className="inline-flex items-center gap-2 bg-[#D6242A] hover:bg-[#B81E23] text-white font-semibold px-7 py-4 rounded-lg transition-colors"
             >
               Explore Courses
               <ArrowRight size={18} />
-            </a>
+            </Link>
 
             {/* decorative dot grid */}
             <div className="hidden sm:grid grid-cols-5 gap-3">

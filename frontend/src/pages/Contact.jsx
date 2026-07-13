@@ -1,8 +1,11 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 import { ChevronRight, Phone, Mail, MapPin } from "lucide-react";
 import nileshRaiSir from "../assets/nilesh-rai-sir.png";
+import InquiryForm from "../assets/components/InquiryForm";
 
-const branches = [
+const defaultBranches = [
   {
     name: "Chembur",
     address:
@@ -16,6 +19,18 @@ const branches = [
 ];
 
 export default function Contact() {
+  const [campuses, setCampuses] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/branches/`)
+      .then((res) => res.json())
+      .then((data) => setCampuses(data))
+      .catch((err) => {
+        console.error("Failed to load branches:", err);
+        setCampuses(defaultBranches);
+      });
+  }, []);
+
   return (
     <>
       {/* Page header */}
@@ -49,18 +64,27 @@ export default function Contact() {
           </p>
 
           <div className="flex flex-wrap gap-3 mt-8">
-            <div className="inline-flex items-center gap-2 bg-[#D6242A] text-white font-semibold text-sm px-6 py-3 rounded-lg">
+            <a
+              href="tel:+919819828574"
+              className="inline-flex items-center gap-2 bg-[#D6242A] hover:bg-[#B81E23] text-white font-semibold text-sm px-6 py-3 rounded-lg transition-colors"
+            >
               <Phone size={16} />
               Call +91 98198 28574
-            </div>
-            <div className="inline-flex items-center gap-2 bg-[#D6242A] text-white font-semibold text-sm px-6 py-3 rounded-lg">
+            </a>
+            <a
+              href="tel:+919152612535"
+              className="inline-flex items-center gap-2 bg-[#D6242A] hover:bg-[#B81E23] text-white font-semibold text-sm px-6 py-3 rounded-lg transition-colors"
+            >
               <Phone size={16} />
               Call +91 91526 12535
-            </div>
-            <div className="inline-flex items-center gap-2 bg-white text-neutral-900 font-semibold text-sm px-6 py-3 rounded-lg border border-neutral-300">
+            </a>
+            <a
+              href="mailto:ieducare888@gmail.com"
+              className="inline-flex items-center gap-2 bg-white text-neutral-900 hover:text-[#D6242A] font-semibold text-sm px-6 py-3 rounded-lg border border-neutral-300 transition-colors"
+            >
               <Mail size={16} className="text-[#D6242A]" />
               ieducare888@gmail.com
-            </div>
+            </a>
           </div>
         </div>
       </section>
@@ -102,8 +126,15 @@ export default function Contact() {
         </div>
       </section>
 
+      {/* Inquiry Form */}
+      <section className="bg-white py-12 sm:py-16 px-4 border-t border-neutral-100">
+        <div className="max-w-7xl mx-auto">
+          <InquiryForm />
+        </div>
+      </section>
+
       {/* Branches */}
-      <section className="bg-white overflow-x-hidden">
+      <section className="bg-white overflow-x-hidden border-t border-neutral-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-16 sm:py-24">
           <div className="flex items-center gap-3 mb-10">
             <span className="w-8 h-px bg-[#D6242A]" />
@@ -113,7 +144,7 @@ export default function Contact() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {branches.map((branch) => (
+            {(campuses.length > 0 ? campuses : defaultBranches).map((branch) => (
               <div
                 key={branch.name}
                 className="bg-[#FBF4E9] border border-neutral-200 rounded-xl p-6 sm:p-8 min-w-0 flex flex-col"

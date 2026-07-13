@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 import {
   ChevronRight,
   FlaskConical,
@@ -8,62 +10,61 @@ import {
   Award,
 } from "lucide-react";
 
-const topperGroups = [
+const groupConfigs = [
   {
+    category: "SCIENCE",
     icon: FlaskConical,
     title: "Aggregate Science Toppers",
     statLabel: "AGGREGATE",
     statUnit: "%",
-    toppers: [
-      { name: "Sanjay Chapparwal", school: "AVM", score: "99.8", subject: "Chemistry" },
-      { name: "Maanvir Bamboli", school: "SJU", score: "98.4", subject: "Chemistry" },
-      { name: "Vansh Nevatia", school: "AVM", score: "98.4", subject: "Chemistry" },
-      { name: "Vatsal Shah", school: "SJU", score: "98.2", subject: "Chemistry" },
-    ],
   },
   {
+    category: "HINDI",
     icon: Languages,
     title: "Hindi Toppers",
     statLabel: "MARKS",
     statUnit: "/100",
-    toppers: [
-      { name: "Diya Kapasi", school: "St. Gregorios High School", score: "99", subject: "Hindi" },
-      { name: "Aritro Biswas", school: "The Green Acres Academy", score: "99", subject: "Hindi" },
-      { name: "Aarya Mayekar", school: "J.B. Vachha High School", score: "98", subject: "Hindi" },
-      { name: "Khushi Didwania", school: "St. Gregorios High School", score: "98", subject: "Hindi" },
-    ],
   },
   {
+    category: "HISTORY_GEOGRAPHY",
     icon: Landmark,
     title: "History & Geography Toppers",
     statLabel: "MARKS",
     statUnit: "/100",
-    toppers: [
-      { name: "Aariz Bangi", school: "Ryan International", score: "100", subject: "History" },
-      { name: "Suvir Bakshi", school: "Avalon", score: "100", subject: "History" },
-      { name: "Mehak Khosla", school: "B. Scottish", score: "95", subject: "Geography" },
-      { name: "Sarah Khan", school: "B. Scottish", score: "94", subject: "Geography" },
-    ],
   },
   {
+    category: "LITERATURE_LANGUAGE",
     icon: BookOpen,
     title: "Literature & Language Toppers",
     statLabel: "MARKS",
     statUnit: "/100",
-    toppers: [
-      { name: "Rukaan Chotrani", school: "Ryan International", score: "99", subject: "Literature" },
-      { name: "Rajvi Shah", school: "Gold Crest", score: "97", subject: "Literature" },
-      { name: "Risa Panekar", school: "St. Gregorios High School", score: "98", subject: "Language" },
-      { name: "Trishan Sharma", school: "St. Gregorios High School", score: "98", subject: "Language" },
-    ],
   },
 ];
 
+const defaultToppers = [
+  { name: "Sanjay Chapparwal", school: "AVM", score: "99.8", subject: "Chemistry", category: "SCIENCE", is_perfect: false },
+  { name: "Maanvir Bamboli", school: "SJU", score: "98.4", subject: "Chemistry", category: "SCIENCE", is_perfect: false },
+  { name: "Vansh Nevatia", school: "AVM", score: "98.4", subject: "Chemistry", category: "SCIENCE", is_perfect: false },
+  { name: "Vatsal Shah", school: "SJU", score: "98.2", subject: "Chemistry", category: "SCIENCE", is_perfect: false },
+  { name: "Diya Kapasi", school: "St. Gregorios High School", score: "99", subject: "Hindi", category: "HINDI", is_perfect: false },
+  { name: "Aritro Biswas", school: "The Green Acres Academy", score: "99", subject: "Hindi", category: "HINDI", is_perfect: false },
+  { name: "Aarya Mayekar", school: "J.B. Vachha High School", score: "98", subject: "Hindi", category: "HINDI", is_perfect: false },
+  { name: "Khushi Didwania", school: "St. Gregorios High School", score: "98", subject: "Hindi", category: "HINDI", is_perfect: false },
+  { name: "Aariz Bangi", school: "Ryan International", score: "100", subject: "History", category: "HISTORY_GEOGRAPHY", is_perfect: true },
+  { name: "Suvir Bakshi", school: "Avalon", score: "100", subject: "History", category: "HISTORY_GEOGRAPHY", is_perfect: true },
+  { name: "Mehak Khosla", school: "B. Scottish", score: "95", subject: "Geography", category: "HISTORY_GEOGRAPHY", is_perfect: false },
+  { name: "Sarah Khan", school: "B. Scottish", score: "94", subject: "Geography", category: "HISTORY_GEOGRAPHY", is_perfect: false },
+  { name: "Rukaan Chotrani", school: "Ryan International", score: "99", subject: "Literature", category: "LITERATURE_LANGUAGE", is_perfect: false },
+  { name: "Rajvi Shah", school: "Gold Crest", score: "97", subject: "Literature", category: "LITERATURE_LANGUAGE", is_perfect: false },
+  { name: "Risa Panekar", school: "St. Gregorios High School", score: "98", subject: "Language", category: "LITERATURE_LANGUAGE", is_perfect: false },
+  { name: "Trishan Sharma", school: "St. Gregorios High School", score: "98", subject: "Language", category: "LITERATURE_LANGUAGE", is_perfect: false }
+];
+
 function TopperCard({ topper, statLabel, statUnit }) {
-  const isPerfect = topper.score === "100";
+  const isPerfect = topper.is_perfect || topper.score === "100";
 
   return (
-    <div className="relative bg-white border border-neutral-200 rounded-xl p-5 shadow-sm overflow-hidden">
+    <div className="relative bg-white border border-neutral-200 rounded-xl p-5 shadow-sm overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-300">
       {isPerfect && (
         <div className="absolute top-0 right-0">
           <div className="bg-[#F3B70E] text-[#D6242A] text-[10px] font-extrabold tracking-widest px-3 py-1 rounded-bl-lg flex items-center gap-1">
@@ -111,6 +112,28 @@ function TopperCard({ topper, statLabel, statUnit }) {
 }
 
 export default function Toppers() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/api/toppers/`)
+      .then((res) => res.json())
+      .then((json) => setData(json))
+      .catch((err) => {
+        console.error("Failed to load toppers from API:", err);
+      });
+  }, []);
+
+  const flatToppers = data.length > 0 ? data : defaultToppers;
+
+  // Group toppers dynamically by category matching groupConfigs
+  const topperGroups = groupConfigs.map((cfg) => {
+    const groupToppers = flatToppers.filter((t) => t.category === cfg.category);
+    return {
+      ...cfg,
+      toppers: groupToppers,
+    };
+  });
+
   return (
     <>
       {/* Hero section */}
@@ -145,6 +168,10 @@ export default function Toppers() {
           </div>
         </div>
       </section>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="border-t border-neutral-200" />
+      </div>
 
       {/* Topper groups */}
       <section className="bg-[#FBF4E9]">
