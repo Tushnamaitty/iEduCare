@@ -48,13 +48,18 @@ const defaultSubjects = [
   },
 ];
 
+import { getCachedData, fetchWithCache } from "../utils/apiCache";
+
 export default function Courses() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const endpoint = "/api/courses/";
+  const cached = getCachedData(endpoint);
+
+  const [data, setData] = useState(cached || []);
+  const [loading, setLoading] = useState(!cached);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/courses/`)
-      .then((res) => res.json())
+    if (cached) return;
+    fetchWithCache(endpoint)
       .then((json) => {
         setData(json);
         setLoading(false);
@@ -63,7 +68,7 @@ export default function Courses() {
         console.error("Failed to load courses from API:", err);
         setLoading(false);
       });
-  }, []);
+  }, [cached, endpoint]);
 
   if (loading) {
     return (

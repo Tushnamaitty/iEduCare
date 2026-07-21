@@ -91,13 +91,18 @@ function CampusCard({ campus }) {
   );
 }
 
+import { getCachedData, fetchWithCache } from "../utils/apiCache";
+
 export default function Branches() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const endpoint = "/api/branches/";
+  const cached = getCachedData(endpoint);
+  
+  const [data, setData] = useState(cached || []);
+  const [loading, setLoading] = useState(!cached);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/branches/`)
-      .then((res) => res.json())
+    if (cached) return; // already have data
+    fetchWithCache(endpoint)
       .then((json) => {
         setData(json);
         setLoading(false);
@@ -106,7 +111,7 @@ export default function Branches() {
         console.error("Failed to load branches from API:", err);
         setLoading(false);
       });
-  }, []);
+  }, [cached, endpoint]);
 
   if (loading) {
     return (
