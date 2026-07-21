@@ -38,6 +38,10 @@ function CampusCard({ campus }) {
           src={imageSrc}
           alt={`${campus.name} campus`}
           className="w-full h-full object-cover"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = imageMap[campus.name] || chemburImg;
+          }}
         />
       </div>
 
