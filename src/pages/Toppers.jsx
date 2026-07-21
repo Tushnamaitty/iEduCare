@@ -111,27 +111,10 @@ function TopperCard({ topper, statLabel, statUnit }) {
   );
 }
 
-import { getCachedData, fetchWithCache } from "../utils/apiCache";
+import { useApi } from "../utils/useApi";
 
 export default function Toppers() {
-  const endpoint = "/api/toppers/";
-  const cached = getCachedData(endpoint);
-
-  const [data, setData] = useState(cached || []);
-  const [loading, setLoading] = useState(!cached);
-
-  useEffect(() => {
-    if (cached) return;
-    fetchWithCache(endpoint)
-      .then((json) => {
-        setData(json);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to load toppers from API:", err);
-        setLoading(false);
-      });
-  }, [cached, endpoint]);
+  const { data, loading } = useApi("/api/toppers/", []);
 
   if (loading) {
     return (
