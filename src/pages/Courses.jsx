@@ -50,15 +50,28 @@ const defaultSubjects = [
 
 export default function Courses() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/courses/`)
       .then((res) => res.json())
-      .then((json) => setData(json))
+      .then((json) => {
+        setData(json);
+        setLoading(false);
+      })
       .catch((err) => {
         console.error("Failed to load courses from API:", err);
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#D6242A]"></div>
+      </div>
+    );
+  }
 
   const displayCourses = data.length > 0 ? data : defaultCourses;
 

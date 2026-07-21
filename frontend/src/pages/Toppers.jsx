@@ -113,15 +113,28 @@ function TopperCard({ topper, statLabel, statUnit }) {
 
 export default function Toppers() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/api/toppers/`)
       .then((res) => res.json())
-      .then((json) => setData(json))
+      .then((json) => {
+        setData(json);
+        setLoading(false);
+      })
       .catch((err) => {
         console.error("Failed to load toppers from API:", err);
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#FBF4E9]">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#D6242A]"></div>
+      </div>
+    );
+  }
 
   const flatToppers = data.length > 0 ? data : defaultToppers;
 
