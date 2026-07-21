@@ -13,9 +13,20 @@ import AdminDashboard from "./pages/AdminDashboard";
 
 import "./App.css";
 
+import { useApi } from "./utils/useApi";
+
 function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+
+  // Pre-fetch all data silently in the background on initial load
+  // so that navigating to any tab is 100% instant with no spinners
+  if (!isAdminRoute) {
+    useApi("/api/branches/");
+    useApi("/api/courses/");
+    useApi("/api/toppers/");
+    useApi("/api/settings/1/");
+  }
 
   return (
     <div className="bg-[#FBF4E9] min-h-screen flex flex-col justify-between">
