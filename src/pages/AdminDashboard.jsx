@@ -828,7 +828,8 @@ export default function AdminDashboard() {
                       if (response.ok) {
                         showMessage("success", "Settings updated successfully.");
                       } else {
-                        showMessage("error", "Failed to update settings.");
+                        const errorData = await response.json();
+                        showMessage("error", `Failed to update settings: ${JSON.stringify(errorData)}`);
                       }
                     } catch (err) {
                       showMessage("error", "Network error updating settings.");
