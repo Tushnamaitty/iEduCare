@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Users, Award, ShieldCheck, BookOpen } from "lucide-react";
 import { API_BASE_URL } from "../../config";
+import { useApi } from "../../utils/useApi";
 
 const iconMap = {
   Users: Users,
@@ -17,18 +18,9 @@ const defaultStats = [
 ];
 
 export default function StatsBar() {
-  const [data, setData] = useState([]);
+  const { data, loading } = useApi("/api/stats/", []);
 
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/stats/`)
-      .then((res) => res.json())
-      .then((json) => setData(json))
-      .catch((err) => {
-        console.error("Failed to load stats from API:", err);
-      });
-  }, []);
-
-  const displayStats = data.length > 0 ? data : defaultStats;
+  const displayStats = data && data.length > 0 ? data : defaultStats;
 
   return (
     <section className="grid grid-cols-2 lg:grid-cols-4">

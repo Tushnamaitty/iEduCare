@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../config";
+import { useApi } from "../../utils/useApi";
 import { Phone, Mail, MapPin } from "lucide-react";
 import logoImg from "../logo.png";
 
@@ -62,23 +63,8 @@ function YoutubeIcon() {
 }
 
 export default function Footer() {
-  const [settings, setSettings] = useState(null);
-  const [branches, setBranches] = useState([]);
-
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/settings/1/`)
-      .then((res) => {
-        if (res.ok) return res.json();
-        throw new Error("Settings not found");
-      })
-      .then((data) => setSettings(data))
-      .catch((err) => console.error("Failed to fetch settings:", err));
-
-    fetch(`${API_BASE_URL}/api/branches/`)
-      .then((res) => res.json())
-      .then((data) => setBranches(data))
-      .catch((err) => console.error("Failed to fetch branches:", err));
-  }, []);
+  const { data: settings } = useApi("/api/settings/1/", null);
+  const { data: branches } = useApi("/api/branches/", []);
 
   const uniquePhones = Array.from(new Set(branches.map(b => b.phone).filter(Boolean)));
 

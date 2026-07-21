@@ -3,28 +3,17 @@ import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../config";
 import { ArrowRight } from "lucide-react";
 import heroImg from "../hero.png";
+import { useApi } from "../../utils/useApi";
 
 export default function Hero() {
-  const [branches, setBranches] = useState([]);
-  const [batchSize, setBatchSize] = useState("20");
-
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/branches/`)
-      .then(res => res.json())
-      .then(data => setBranches(data))
-      .catch(err => console.error("Failed to load branches:", err));
-
-    fetch(`${API_BASE_URL}/api/settings/1/`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.batch_size) setBatchSize(data.batch_size);
-      })
-      .catch(err => console.error("Failed to load settings:", err));
-  }, []);
+  const { data: branches = [] } = useApi("/api/branches/", []);
+  const { data: settings } = useApi("/api/settings/1/", null);
 
   const branchText = branches.length > 0 
     ? branches.map(b => b.name.toUpperCase()).join(" • ")
     : "CHEMBUR • MATUNGA";
+
+  const batchSize = settings?.batch_size || "20";
 
   return (
     <section id="home" className="relative bg-[#FBF4E9] overflow-hidden">
