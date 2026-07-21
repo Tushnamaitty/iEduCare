@@ -270,9 +270,9 @@ export default function AdminDashboard() {
   );
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] flex">
+    <div className="min-h-screen bg-[#FAF9F6] flex flex-col md:flex-row">
       {/* Sidebar */}
-      <aside className="w-64 bg-neutral-900 text-white flex flex-col justify-between shrink-0">
+      <aside className="w-full md:w-64 bg-neutral-900 text-white flex flex-col justify-between shrink-0">
         <div>
           {/* Sidebar Header */}
           <div className="p-6 border-b border-neutral-800 flex items-center gap-3">
@@ -389,7 +389,7 @@ export default function AdminDashboard() {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         {/* Header bar */}
-        <header className="bg-white border-b border-neutral-200 px-8 py-5 flex items-center justify-between shrink-0">
+        <header className="bg-white border-b border-neutral-200 px-4 md:px-8 py-5 flex flex-col md:flex-row md:items-center justify-between shrink-0 gap-4">
           <h2 className="text-xl font-extrabold text-neutral-900 tracking-tight uppercase">
             {activeTab === "inquiries" && "Parent & Student Inquiries"}
             {activeTab === "toppers" && "Toppers honors Board"}
@@ -422,7 +422,7 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        <div className="flex-1 p-8">
+        <div className="flex-1 p-4 md:p-8 overflow-x-auto">
           {/* TAB 1: INQUIRIES */}
           {activeTab === "inquiries" && (
             <div className="space-y-6">
