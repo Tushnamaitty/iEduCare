@@ -62,11 +62,20 @@ function YoutubeIcon() {
   );
 }
 
+function WhatsAppIcon() {
+  return (
+    <svg {...iconProps}>
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </svg>
+  );
+}
+
 export default function Footer() {
   const { data: settings } = useApi("/api/settings/1/", null);
   const { data: branches } = useApi("/api/branches/", []);
 
   const uniquePhones = Array.from(new Set(branches.map(b => b.phone).filter(Boolean)));
+  const whatsappNumber = uniquePhones.length > 0 ? uniquePhones[0].replace(/\D/g, '') : "919819828574";
 
   return (
     <footer className="bg-[#FAF9F6] border-t border-neutral-200 pt-16">
@@ -88,6 +97,9 @@ export default function Footer() {
             A quiet, disciplined place to become the student you want to be.
           </p>
           <div className="flex items-center gap-4 mt-5 text-neutral-500">
+            <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="hover:text-[#D6242A]">
+              <WhatsAppIcon />
+            </a>
             {settings?.instagram_url && (
               <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-[#D6242A]">
                 <InstagramIcon />
