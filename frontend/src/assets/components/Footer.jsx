@@ -96,10 +96,13 @@ export default function Footer() {
           <p className="text-neutral-600 text-sm leading-relaxed max-w-xs">
             A quiet, disciplined place to become the student you want to be.
           </p>
-          <div className="flex items-center gap-4 mt-5 text-neutral-500">
-            <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="hover:text-[#D6242A]">
+          <div className="mt-6 mb-2">
+            <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-[#1DA851] transition-colors shadow-sm">
               <WhatsAppIcon />
+              Chat on WhatsApp
             </a>
+          </div>
+          <div className="flex items-center gap-4 mt-5 text-neutral-500">
             {settings?.instagram_url && (
               <a href={settings.instagram_url} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-[#D6242A]">
                 <InstagramIcon />
