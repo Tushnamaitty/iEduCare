@@ -38,14 +38,14 @@ def seed_database():
             "address": "101 Jolitha Complex, Near Ratna store, opposite Shiv Mandir, Ghatla village marg, Chembur, Mumbai- 400071",
             "phone": "+91 98198 28574",
             "hours": "Mon–Sun : 1:00 PM – 8:30 PM",
-            "image_url": "/src/assets/chembur-campus.jpg"
+            "image": "/src/assets/chembur-campus.jpg"
         },
         {
             "name": "Matunga",
             "address": "2nd floor 36, Vorabhavan Plot No. 467-A, Dr. Ambedkar road, above Bank Of Baroda, Mumbai- 400019",
             "phone": "+91 91526 12535",
             "hours": "Mon–Sun : 1:00 PM – 8:30 PM",
-            "image_url": "/src/assets/matunga-campus.jpg"
+            "image": "/src/assets/matunga-campus.jpg"
         }
     ]
     for branch in branches_data:
