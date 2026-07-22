@@ -837,15 +837,7 @@ export default function AdminDashboard() {
                   }}
                   className="space-y-4"
                 >
-                  <div>
-                    <label className="block text-xs font-bold text-neutral-500 mb-1.5 uppercase">Batch Size Text</label>
-                    <input
-                      type="text"
-                      value={siteSettings.batch_size || ""}
-                      onChange={(e) => setSiteSettings({ ...siteSettings, batch_size: e.target.value })}
-                      className="w-full text-sm border border-neutral-200 rounded-lg p-2.5 focus:border-[#D6242A] focus:outline-none"
-                    />
-                  </div>
+
                   <div>
                     <label className="block text-xs font-bold text-neutral-500 mb-1.5 uppercase">Instagram URL</label>
                     <input
@@ -1153,20 +1145,14 @@ export default function AdminDashboard() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-neutral-500 mb-1.5 uppercase">Upload Branch Image</label>
+                    <label className="block text-xs font-bold text-neutral-500 mb-1.5 uppercase">Branch Image URL (Imgur link)</label>
                     <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        if (e.target.files && e.target.files[0]) {
-                          setFormFields({ ...formFields, image: e.target.files[0] });
-                        }
-                      }}
+                      type="url"
+                      placeholder="https://i.imgur.com/your-image.jpg"
+                      value={formFields.image || (editItem && editItem.image) || ""}
+                      onChange={(e) => setFormFields({ ...formFields, image: e.target.value })}
                       className="w-full text-xs border border-neutral-200 rounded-lg p-2.5 focus:border-[#D6242A] focus:outline-none"
                     />
-                    {editItem && editItem.image && (
-                      <p className="mt-2 text-xs text-neutral-500">Current image: {editItem.image.split('/').pop()}</p>
-                    )}
                   </div>
                 </>
               )}
