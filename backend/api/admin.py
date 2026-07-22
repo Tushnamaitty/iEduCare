@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Topper, Course, Subject, Branch, Stat, Inquiry
+from .models import Topper, Course, Subject, Branch, Stat, Inquiry, SiteSetting
+
+@admin.register(SiteSetting)
+class SiteSettingAdmin(admin.ModelAdmin):
+    list_display = ('__str__', 'facebook_url', 'instagram_url', 'youtube_url')
 
 @admin.register(Topper)
 class TopperAdmin(admin.ModelAdmin):
