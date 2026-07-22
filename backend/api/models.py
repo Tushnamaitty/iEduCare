@@ -40,7 +40,7 @@ class Branch(models.Model):
     address = models.TextField()
     phone = models.CharField(max_length=50)
     hours = models.CharField(max_length=100, default="Mon–Sun : 1:00 PM – 8:30 PM")
-    image = models.ImageField(upload_to='branches/', blank=True, null=True)
+    image = models.URLField(max_length=500, blank=True, null=True, help_text="Paste an Imgur or external image link here")
 
     def __str__(self):
         return self.name
@@ -77,7 +77,7 @@ class SiteSetting(models.Model):
     facebook_url = models.URLField(blank=True, null=True, default="https://facebook.com")
     instagram_url = models.URLField(blank=True, null=True, default="https://instagram.com")
     youtube_url = models.URLField(blank=True, null=True, default="https://youtube.com")
-    batch_size = models.CharField(max_length=50, default="20")
+
 
     def __str__(self):
         return "Global Site Settings"

@@ -13,8 +13,6 @@ export default function Hero() {
     ? branches.map(b => b.name.toUpperCase()).join(" • ")
     : "CHEMBUR • MATUNGA";
 
-  const batchSize = settings?.batch_size || "20";
-
   return (
     <section id="home" className="relative bg-[#FBF4E9] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 lg:py-20 grid lg:grid-cols-2 gap-12 items-center">
@@ -39,7 +37,7 @@ export default function Hero() {
 
           <p className="mt-6 text-neutral-700 text-base leading-relaxed max-w-md">
             Expert coaching for Classes 7 to 10 — experienced mentors,
-            batches capped at {batchSize}, weekly diagnostics and an outstanding
+            weekly diagnostics, and an outstanding
             record of ICSE &amp; IGCSE board results.
           </p>
 
