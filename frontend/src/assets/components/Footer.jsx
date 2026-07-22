@@ -6,9 +6,12 @@ import { Phone, Mail, MapPin } from "lucide-react";
 import logoImg from "../logo.png";
 
 const exploreLinks = [
+  { label: "Home", to: "/" },
   { label: "About", to: "/about" },
   { label: "Courses", to: "/courses" },
   { label: "Toppers", to: "/toppers" },
+  { label: "Branches", to: "/branches" },
+  { label: "Contact", to: "/contact" },
 ];
 
 function Logo() {
