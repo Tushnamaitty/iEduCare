@@ -1154,6 +1154,16 @@ export default function AdminDashboard() {
                       className="w-full text-xs border border-neutral-200 rounded-lg p-2.5 focus:border-[#D6242A] focus:outline-none"
                     />
                   </div>
+                  <div>
+                    <label className="block text-xs font-bold text-neutral-500 mb-1.5 uppercase">Google Maps Location URL</label>
+                    <input
+                      type="url"
+                      placeholder="https://maps.google.com/?q=..."
+                      value={formFields.google_maps_url || (editItem && editItem.google_maps_url) || ""}
+                      onChange={(e) => setFormFields({ ...formFields, google_maps_url: e.target.value })}
+                      className="w-full text-xs border border-neutral-200 rounded-lg p-2.5 focus:border-[#D6242A] focus:outline-none"
+                    />
+                  </div>
                 </>
               )}
 

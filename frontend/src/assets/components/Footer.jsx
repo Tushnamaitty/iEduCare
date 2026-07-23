@@ -173,7 +173,16 @@ export default function Footer() {
             {branches.map(branch => (
               <li key={branch.id} className="flex items-start gap-3">
                 <MapPin size={16} className="text-[#D6242A] mt-0.5 shrink-0" />
-                <span>{branch.address}</span>
+                <span>
+                  <a 
+                    href={branch.google_maps_url || `https://www.google.com/maps/search/${encodeURIComponent(branch.address)}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="hover:text-[#D6242A] transition-colors block"
+                  >
+                    {branch.address}
+                  </a>
+                </span>
               </li>
             ))}
           </ul>

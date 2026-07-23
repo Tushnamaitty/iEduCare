@@ -10,11 +10,13 @@ const defaultBranches = [
     name: "Chembur",
     address:
       "101 Jolitha Complex, Near Ratna store, opposite Shiv Mandir, Ghatla village marg, Chembur, Mumbai- 400071",
+    google_maps_url: "https://maps.google.com/?q=19.050571,72.906532",
   },
   {
     name: "Matunga",
     address:
       "2nd floor 36, Vorabhavan Plot No. 467-A, Dr. Ambedkar road, above Bank Of Baroda, Mumbai- 400019",
+    google_maps_url: "https://maps.google.com/?q=19.026947,72.856209",
   },
 ];
 
@@ -164,11 +166,7 @@ export default function Contact() {
                 </div>
                 <a
                   href={
-                    branch.name === "Matunga" 
-                      ? "https://maps.google.com/?q=19.026947,72.856209" 
-                      : branch.name === "Chembur"
-                      ? "https://maps.google.com/?q=19.050571,72.906532"
-                      : `https://www.google.com/maps/search/${encodeURIComponent(branch.address)}`
+                    branch.google_maps_url || `https://www.google.com/maps/search/${encodeURIComponent(branch.address)}`
                   }
                   target="_blank"
                   rel="noreferrer"
