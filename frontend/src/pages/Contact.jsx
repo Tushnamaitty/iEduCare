@@ -163,9 +163,13 @@ export default function Contact() {
                   </div>
                 </div>
                 <a
-                  href={`https://www.google.com/maps/search/${encodeURIComponent(
-                    branch.address
-                  )}`}
+                  href={
+                    branch.name === "Matunga" 
+                      ? "https://maps.google.com/?q=19.026947,72.856209" 
+                      : branch.name === "Chembur"
+                      ? "https://maps.google.com/?q=19.050571,72.906532"
+                      : `https://www.google.com/maps/search/${encodeURIComponent(branch.address)}`
+                  }
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1.5 text-[#D6242A] text-sm font-semibold mt-5 hover:underline"
