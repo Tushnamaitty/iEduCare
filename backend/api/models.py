@@ -40,7 +40,7 @@ class Branch(models.Model):
     address = models.TextField()
     phone = models.CharField(max_length=50)
     hours = models.CharField(max_length=100, default="Mon–Sun : 1:00 PM – 8:30 PM")
-    image = models.URLField(max_length=500, blank=True, null=True, help_text="Paste an Imgur or external image link here")
+    image = models.CharField(max_length=500, blank=True, null=True, help_text="Paste an Imgur or external image link here")
     google_maps_url = models.URLField(max_length=500, blank=True, null=True, help_text="Paste exact Google Maps URL here")
 
     def __str__(self):
