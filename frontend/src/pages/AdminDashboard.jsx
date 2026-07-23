@@ -114,28 +114,11 @@ export default function AdminDashboard() {
     const method = editItem ? "PUT" : "POST";
     const url = editItem ? `${endpoint}${editItem.id}/` : endpoint;
 
-    let body;
+    let body = JSON.stringify(formFields);
     let headers = {
-      "Authorization": `Token ${token}`
+      "Authorization": `Token ${token}`,
+      "Content-Type": "application/json"
     };
-
-    // Use FormData if there is a File object (e.g. for branch image upload)
-    const hasFile = Object.values(formFields).some(val => val instanceof File);
-
-    if (hasFile || modalType === "branch") {
-      body = new FormData();
-      Object.entries(formFields).forEach(([key, value]) => {
-        if (key === 'image' && !(value instanceof File)) {
-          return; // Don't send the existing string URL when updating
-        }
-        if (value !== null && value !== undefined) {
-          body.append(key, value);
-        }
-      });
-    } else {
-      headers["Content-Type"] = "application/json";
-      body = JSON.stringify(formFields);
-    }
 
     try {
       const response = await fetch(url, {
