@@ -28,9 +28,21 @@ const defaultCampuses = [
 ];
 
 function CampusCard({ campus }) {
-  const imageSrc = campus.image 
-    ? (campus.image.startsWith('http') ? campus.image : API_BASE_URL + campus.image) 
-    : (imageMap[campus.name] || chemburImg);
+  let imageSrc;
+  if (campus.image) {
+    if (campus.image.startsWith('http')) {
+      imageSrc = campus.image;
+    } else if (campus.image.startsWith('/')) {
+      imageSrc = API_BASE_URL + campus.image;
+    } else if (campus.image.startsWith('branches/')) {
+      imageSrc = API_BASE_URL + '/media/' + campus.image;
+    } else {
+      imageSrc = 'https://' + campus.image; // Assume they missed https://
+    }
+  } else {
+    imageSrc = imageMap[campus.name] || chemburImg;
+  }
+
   return (
     <div className="bg-white border border-neutral-200 rounded-2xl overflow-hidden shadow-sm">
       <div className="aspect-[16/10] w-full overflow-hidden bg-neutral-100">
@@ -38,10 +50,6 @@ function CampusCard({ campus }) {
           src={imageSrc}
           alt={`${campus.name} campus`}
           className="w-full h-full object-cover"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = imageMap[campus.name] || chemburImg;
-          }}
         />
       </div>
 
