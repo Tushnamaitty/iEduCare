@@ -88,10 +88,12 @@ export default function AdminDashboard() {
       setStats(dataSt);
 
       // Fetch site settings
-      const resSet = await fetch(`${API_BASE_URL}/api/settings/1/`);
+      const resSet = await fetch(`${API_BASE_URL}/api/settings/`);
       if (resSet.ok) {
         const dataSet = await resSet.json();
-        setSiteSettings(dataSet);
+        if (dataSet && dataSet.length > 0) {
+          setSiteSettings(dataSet[0]);
+        }
       }
 
     } catch (err) {
@@ -800,8 +802,11 @@ export default function AdminDashboard() {
                   onSubmit={async (e) => {
                     e.preventDefault();
                     try {
-                      const response = await fetch(`${API_BASE_URL}/api/settings/1/`, {
-                        method: "PUT",
+                      const method = siteSettings.id ? "PUT" : "POST";
+                      const url = siteSettings.id ? `${API_BASE_URL}/api/settings/${siteSettings.id}/` : `${API_BASE_URL}/api/settings/`;
+                      
+                      const response = await fetch(url, {
+                        method: method,
                         headers: {
                           "Content-Type": "application/json",
                           "Authorization": `Token ${token}`
@@ -809,6 +814,8 @@ export default function AdminDashboard() {
                         body: JSON.stringify(siteSettings)
                       });
                       if (response.ok) {
+                        const savedData = await response.json();
+                        setSiteSettings(savedData);
                         showMessage("success", "Settings updated successfully.");
                       } else {
                         const errorData = await response.json();
